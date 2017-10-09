@@ -38,11 +38,6 @@ public class Gambo {
   
   public static WebDriver Gambo_Login(String usr, String pwd) {
 	  
-	  	System.setProperty("webdriver.chrome.driver", "C:\\Users\\Jblue\\Desktop\\Java Libraries\\Driver\\chromedriver.exe"); ////Users//rickfrankel//Desktop//SupremeBot//Driver//chromedriver
-		System.setProperty("webdriver.chrome.silentOutput", "true"); 
-		Logger logger = Logger.getLogger(""); 
-		logger.setLevel(Level.OFF); 
-	  
 		WebDriver driver = new ChromeDriver();
 		driver.get("https://gamdom.com/crash");
 		WebDriverWait wait = new WebDriverWait(driver, 5); 
