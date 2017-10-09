@@ -61,7 +61,7 @@ public class Gambo {
   
   public static void Monitor_Crash(WebDriver driver) {
 	  
-	  while(1 > 0) {
+	  while(true) {
 		  String crash = driver.getPageSource().substring(0,150).split("<title>")[1].split("-")[0].trim();
 		  
 		  if(crash.contains("crashed at") == true) {
@@ -87,19 +87,10 @@ public class Gambo {
 				catch (IOException ex){
 					System.out.printf("Error: %s\n", ex);
 					
-				}
-			  
-		  }
-		  
-		  
-		  
-		  
-		  
-	  }
-	  
-	  
-  }
-
+				}  
+		  	}    
+	  	}
+  	}
 }
 
 
