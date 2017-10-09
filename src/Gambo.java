@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.io.FileWriter;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -35,6 +37,11 @@ public class Gambo {
   }
   
   public static WebDriver Gambo_Login(String usr, String pwd) {
+	  
+	  	System.setProperty("webdriver.chrome.driver", "C:\\Users\\Jblue\\Desktop\\Java Libraries\\Driver\\chromedriver.exe"); ////Users//rickfrankel//Desktop//SupremeBot//Driver//chromedriver
+		System.setProperty("webdriver.chrome.silentOutput", "true"); 
+		Logger logger = Logger.getLogger(""); 
+		logger.setLevel(Level.OFF); 
 	  
 		WebDriver driver = new ChromeDriver();
 		driver.get("https://gamdom.com/crash");
@@ -67,9 +74,10 @@ public class Gambo {
 		  if(crash.contains("crashed at") == true) {
 			  
 			  String timestamp = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new Date());
-			  System.out.println(crash);
+			  //System.out.println(crash);
 			  
 			  crash = crash.split("crashed at")[1].split("x")[0];
+			  System.out.println(crash);
 			  
 			  try {
 				TimeUnit.SECONDS.sleep(3);
