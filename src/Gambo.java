@@ -82,6 +82,8 @@ public class Gambo {
 			  
 			  System.out.println(crash);
 			  
+			  Repeater_Auto_Bet(driver, bet, crash);
+
 			  try {
 				TimeUnit.SECONDS.sleep(3);
 			} catch (InterruptedException e) {
@@ -99,28 +101,34 @@ public class Gambo {
 					System.out.printf("Error: %s\n", ex);
 					
 				}
-				break;
 		  	}    
 	  	}
-	  Repeater_Auto_Bet(driver, bet);
   	}
-  public static String Repeater_Auto_Bet(WebDriver driver, String bet) {
+  public static String Repeater_Auto_Bet(WebDriver driver, String bet, String crash) {
 	  
+      float crash_num = Float.parseFloat(crash);
+
+      if (crash_num <= 1.2) {
 	  
-	  WebElement enterBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[1]/div/div/div/input"));
-	  WebElement clickBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[5]/div/button/span"));
+    	  	WebElement enterBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[1]/div/div/div/input"));
+    	  	WebElement clickBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[5]/div/button/span"));
 	  
-	  try {
-	  	enterBet.sendKeys(bet);
-	  	clickBet.click();
-	  }catch(Exception e) {
-		  System.out.println("Exception Caught: " + e);
-		  return "Stop";
+    	  	try {
+    	  		enterBet.sendKeys(bet);
+	  		clickBet.click();
+	  		return "Made Bet";
+
+    	  	}catch(Exception e) {
+    	  		System.out.println("Exception Caught: " + e);
+    	  		return "Error";
 	  }
 	  	
-	  Monitor_Crash(driver, bet);
-	  return "Unreachable";
 	  
+	  //Monitor_Crash(driver, bet);
+	  
+      }
+      else; 
+      	return "No Bet";
   }
 }
 
