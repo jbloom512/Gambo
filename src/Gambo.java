@@ -41,13 +41,10 @@ public class Gambo {
   
   public static WebDriver Gambo_Login(String usr, String pwd) {
 	  
-<<<<<<< HEAD
 		System.setProperty("webdriver.chrome.silentOutput", "true"); 
 		Logger logger = Logger.getLogger(""); 
 		logger.setLevel(Level.OFF); 
 	  
-=======
->>>>>>> b9b34adb1d626f38f42e0f2b68b2c67b7e96c83e
 		WebDriver driver = new ChromeDriver();
 		driver.get("https://gamdom.com/crash");
 		WebDriverWait wait = new WebDriverWait(driver, 5); 
