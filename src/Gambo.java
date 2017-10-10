@@ -33,9 +33,11 @@ public class Gambo {
 	String pwd = reader.next();
 	System.out.println("Enter Bet Amount?");
 	String bet = reader.next();
+	System.out.println("Enter Crash Cutoff?");
+	String cutoff = reader.next();
 	
     open_Drivers.add(Gambo_Login(usr,pwd));
-    Monitor_Crash(open_Drivers.get(0), bet);
+    Monitor_Crash(open_Drivers.get(0), bet, cutoff);
     
     reader.close();
   }
@@ -63,13 +65,13 @@ public class Gambo {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"steamAccountName\"]"))).sendKeys(usr);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"steamPassword\"]"))).sendKeys(pwd);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"imageLogin\"]"))).click();
-		WebDriverWait wait30 = new WebDriverWait(driver, 30); 
-		wait30.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"success_continue_btn\"]/div[1]"))).click();
+		WebDriverWait wait60 = new WebDriverWait(driver, 60); 
+		wait60.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"success_continue_btn\"]/div[1]"))).click();
 		driver.get("https://gamdom.com/crash");
 
   }
   
-  public static void Monitor_Crash(WebDriver driver, String bet) { 
+  public static void Monitor_Crash(WebDriver driver, String bet, String cutoff) { 
 	  
 	  while(true) {
 		  String crash = driver.getPageSource().substring(0,150).split("<title>")[1].split("-")[0].trim();
@@ -83,7 +85,7 @@ public class Gambo {
 			  
 			  System.out.println(crash);
 			  
-			  Repeater_Auto_Bet(driver, bet, crash);
+			  String bet_made = Repeater_Auto_Bet(driver, bet, crash, cutoff);
 
 			  try {
 				TimeUnit.SECONDS.sleep(3);
@@ -94,7 +96,7 @@ public class Gambo {
 				File csv = new File("crashes.csv");
 				try {
 					PrintWriter out = new PrintWriter(new FileWriter(csv, true));				
-					out.println(timestamp + ',' + crash);
+					out.println(timestamp + ',' + crash + ',' + bet_made);
 					out.close();
 					
 				}
@@ -105,19 +107,24 @@ public class Gambo {
 		  	}    
 	  	}
   	}
-  public static String Repeater_Auto_Bet(WebDriver driver, String bet, String crash) {
+  public static String Repeater_Auto_Bet(WebDriver driver, String bet, String crash, String cutoff) {
 	  
       float crash_num = Float.parseFloat(crash);
+      float cutoff_num = Float.parseFloat(cutoff);
 
-      if (crash_num <= 1.2) {
+      if (crash_num <= cutoff_num) {
 	  
     	  	WebElement enterBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[1]/div/div/div/input"));
+    	  	WebElement enterCutoff = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[2]/div/div/div/input"));
     	  	WebElement clickBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[5]/div/button/span"));
 	  
     	  	try {
-    	  		enterBet.sendKeys(Keys.chord(Keys.CONTROL, "a"), bet);
+    	  		enterBet.clear();
+    	  		enterBet.sendKeys(bet);
+    	  		enterCutoff.clear();
+    	  		enterCutoff.sendKeys(cutoff);
 	  		clickBet.click();
-	  		return "Made Bet";
+	  		return "Bet";
 
     	  	}catch(Exception e) {
     	  		System.out.println("Exception Caught: " + e);
@@ -129,7 +136,7 @@ public class Gambo {
 	  
       }
       else; 
-      	return "No Bet";
+      	return "No_Bet";
   }
 }
 
