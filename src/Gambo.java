@@ -107,17 +107,19 @@ public class Gambo {
   public static String Repeater_Auto_Bet(WebDriver driver, String bet) {
 	  
 	  
-	  WebElement betElement = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[1]/div/div/div/input"));
+	  WebElement enterBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[1]/div/div/div/input"));
+	  WebElement clickBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[5]/div/button/span"));
 	  
 	  try {
-	  	betElement.sendKeys(bet);
+	  	enterBet.sendKeys(bet);
+	  	clickBet.click();
 	  }catch(Exception e) {
 		  System.out.println("Exception Caught: " + e);
 		  return "Stop";
 	  }
 	  	
 	  Monitor_Crash(driver, bet);
-	  return "Good Luck Ever Reaching This HAHAHAHAHAHAHAHAH SUCK IT JOEY OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO";
+	  return "Unreachable";
 	  
   }
 }
