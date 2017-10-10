@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -114,7 +115,7 @@ public class Gambo {
     	  	WebElement clickBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[5]/div/button/span"));
 	  
     	  	try {
-    	  		enterBet.sendKeys(bet);
+    	  		enterBet.sendKeys(Keys.chord(Keys.CONTROL, "a"), bet);
 	  		clickBet.click();
 	  		return "Made Bet";
 
