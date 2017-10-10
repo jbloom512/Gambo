@@ -1,7 +1,6 @@
 import org.openqa.selenium.By;
-//import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-//import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -12,10 +11,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Scanner; 
-
 
 
 public class Gambo {
@@ -23,22 +23,24 @@ public class Gambo {
 
   public static void main(String[] args){
 
+	List<WebDriver> open_Drivers = new ArrayList<>();
+	  
 	Scanner reader = new Scanner(System.in);
 	System.out.println("Steam User?");
 	String usr = reader.next();
 	System.out.println("Steam Password?");
-
 	String pwd = reader.next();
-
+	System.out.println("Enter Bet Amount?");
+	String bet = reader.next();
 	
-    WebDriver driver = Gambo_Login(usr,pwd);
-    Monitor_Crash(driver);
+    open_Drivers.add(Gambo_Login(usr,pwd));
+    Monitor_Crash(open_Drivers.get(0), bet);
     
+    reader.close();
   }
   
   public static WebDriver Gambo_Login(String usr, String pwd) {
 	  
-	  	System.setProperty("webdriver.chrome.driver", "C:\\Users\\Jblue\\Desktop\\Java Libraries\\Driver\\chromedriver.exe"); ////Users//rickfrankel//Desktop//SupremeBot//Driver//chromedriver
 		System.setProperty("webdriver.chrome.silentOutput", "true"); 
 		Logger logger = Logger.getLogger(""); 
 		logger.setLevel(Level.OFF); 
@@ -66,7 +68,7 @@ public class Gambo {
 
   }
   
-  public static void Monitor_Crash(WebDriver driver) {
+  public static void Monitor_Crash(WebDriver driver, String bet) { 
 	  
 	  while(true) {
 		  String crash = driver.getPageSource().substring(0,150).split("<title>")[1].split("-")[0].trim();
@@ -77,6 +79,7 @@ public class Gambo {
 			  //System.out.println(crash);
 			  
 			  crash = crash.split("crashed at")[1].split("x")[0];
+			  
 			  System.out.println(crash);
 			  
 			  try {
@@ -95,10 +98,28 @@ public class Gambo {
 				catch (IOException ex){
 					System.out.printf("Error: %s\n", ex);
 					
-				}  
+				}
+				break;
 		  	}    
 	  	}
+	  Repeater_Auto_Bet(driver, bet);
   	}
+  public static String Repeater_Auto_Bet(WebDriver driver, String bet) {
+	  
+	  
+	  WebElement betElement = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[1]/div/div/div/input"));
+	  
+	  try {
+	  	betElement.sendKeys(bet);
+	  }catch(Exception e) {
+		  System.out.println("Exception Caught: " + e);
+		  return "Stop";
+	  }
+	  	
+	  Monitor_Crash(driver, bet);
+	  return "Good Luck Ever Reaching This HAHAHAHAHAHAHAHAH SUCK IT JOEY OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO";
+	  
+  }
 }
 
 
