@@ -65,8 +65,11 @@ public class Gambo {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"steamAccountName\"]"))).sendKeys(usr);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"steamPassword\"]"))).sendKeys(pwd);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"imageLogin\"]"))).click();
-		WebDriverWait wait60 = new WebDriverWait(driver, 60); 
-		wait60.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"success_continue_btn\"]/div[1]"))).click();
+		  try {
+			TimeUnit.SECONDS.sleep(60);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		driver.get("https://gamdom.com/crash");
 
   }
