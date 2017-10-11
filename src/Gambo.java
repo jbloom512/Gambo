@@ -33,19 +33,19 @@ public class Gambo {
 	String pwd = reader.next();
 	System.out.println("Enter Bet Amount?");
 	String bet = reader.next();
-<<<<<<< HEAD
+
 	System.out.println("Enter Multiplyer?")
 	String multiplyer = reader.next();
 	
     open_Drivers.add(Gambo_Login(usr,pwd));
     Monitor_Crash(open_Drivers.get(0), bet, multiplyer);
-=======
+
 	System.out.println("Enter Crash Cutoff?");
 	String cutoff = reader.next();
 	
     open_Drivers.add(Gambo_Login(usr,pwd));
     Monitor_Crash(open_Drivers.get(0), bet, cutoff);
->>>>>>> 782be29d78cdb3d428ded23a5509b547eacc3249
+
     
     reader.close();
   }
@@ -79,11 +79,11 @@ public class Gambo {
 
   }
   
-<<<<<<< HEAD
+
   public static void Monitor_Crash(WebDriver driver, String bet, String multiplyer) { 
-=======
+
   public static void Monitor_Crash(WebDriver driver, String bet, String cutoff) { 
->>>>>>> 782be29d78cdb3d428ded23a5509b547eacc3249
+
 	  
 	  while(true) {
 		  String crash = driver.getPageSource().substring(0,150).split("<title>")[1].split("-")[0].trim();
@@ -118,21 +118,21 @@ public class Gambo {
 				}
 		  	}    
 	  	}
-<<<<<<< HEAD
+
 	  Repeater_Auto_Bet(driver, bet, crash, multiplyer);
   	}
   public static void Repeater_Auto_Bet(WebDriver driver, String bet, String recentCrash, String multiplyer) {
-=======
+
   	}
   public static String Repeater_Auto_Bet(WebDriver driver, String bet, String crash, String cutoff) {
->>>>>>> 782be29d78cdb3d428ded23a5509b547eacc3249
+
 	  
       float crash_num = Float.parseFloat(crash);
       float cutoff_num = Float.parseFloat(cutoff);
 
       if (crash_num <= cutoff_num) {
 	  
-<<<<<<< HEAD
+
 	  WebElement enterBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[1]/div/div/div/input"));
 	  WebElement buttonBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[5]/div/button/span"));
 	  
@@ -149,7 +149,7 @@ public class Gambo {
 	  Monitor_Crash(driver, bet, recentCrash); 
   	  }else {
   	  Monitor_Crash(driver, bet, recentCrash);
-=======
+
     	  	WebElement enterBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[1]/div/div/div/input"));
     	  	WebElement enterCutoff = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[2]/div/div/div/input"));
     	  	WebElement clickBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[5]/div/button/span"));
@@ -173,7 +173,7 @@ public class Gambo {
       }
       else; 
       	return "No_Bet";
->>>>>>> 782be29d78cdb3d428ded23a5509b547eacc3249
+
   }
 }
 
