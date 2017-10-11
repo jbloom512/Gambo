@@ -32,9 +32,11 @@ public class Gambo {
 	String pwd = reader.next();
 	System.out.println("Enter Bet Amount?");
 	String bet = reader.next();
+	System.out.println("Enter Multiplyer?")
+	String multiplyer = reader.next();
 	
     open_Drivers.add(Gambo_Login(usr,pwd));
-    Monitor_Crash(open_Drivers.get(0), bet);
+    Monitor_Crash(open_Drivers.get(0), bet, multiplyer);
     
     reader.close();
   }
@@ -68,7 +70,7 @@ public class Gambo {
 
   }
   
-  public static void Monitor_Crash(WebDriver driver, String bet) { 
+  public static void Monitor_Crash(WebDriver driver, String bet, String multiplyer) { 
 	  
 	  while(true) {
 		  String crash = driver.getPageSource().substring(0,150).split("<title>")[1].split("-")[0].trim();
@@ -76,7 +78,7 @@ public class Gambo {
 		  if(crash.contains("crashed at") == true) {
 			  
 			  String timestamp = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new Date());
-			  //System.out.println(crash);
+			  System.out.println(crash);
 			  
 			  crash = crash.split("crashed at")[1].split("x")[0];
 			  
@@ -102,25 +104,27 @@ public class Gambo {
 				break;
 		  	}    
 	  	}
-	  Repeater_Auto_Bet(driver, bet);
+	  Repeater_Auto_Bet(driver, bet, crash, multiplyer);
   	}
-  public static String Repeater_Auto_Bet(WebDriver driver, String bet) {
+  public static void Repeater_Auto_Bet(WebDriver driver, String bet, String recentCrash, String multiplyer) {
 	  
 	  
 	  WebElement enterBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[1]/div/div/div/input"));
-	  WebElement clickBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[5]/div/button/span"));
+	  WebElement buttonBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[5]/div/button/span"));
 	  
+	  double crashed = Double.parseDouble(recentCrash);
 	  try {
-	  	enterBet.sendKeys(bet);
-	  	clickBet.click();
+		  if(crashed <= 1)
+	  		enterBet.sendKeys(bet);
+	  		buttonBet.click();
+	  		
 	  }catch(Exception e) {
 		  System.out.println("Exception Caught: " + e);
 		  return "Stop";
 	  }
-	  	
-	  Monitor_Crash(driver, bet);
-	  return "Unreachable";
-	  
+	  Monitor_Crash(driver, bet, recentCrash); 
+  	  }else {
+  	  Monitor_Crash(driver, bet, recentCrash);
   }
 }
 
