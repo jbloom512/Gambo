@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -32,11 +33,19 @@ public class Gambo {
 	String pwd = reader.next();
 	System.out.println("Enter Bet Amount?");
 	String bet = reader.next();
+<<<<<<< HEAD
 	System.out.println("Enter Multiplyer?")
 	String multiplyer = reader.next();
 	
     open_Drivers.add(Gambo_Login(usr,pwd));
     Monitor_Crash(open_Drivers.get(0), bet, multiplyer);
+=======
+	System.out.println("Enter Crash Cutoff?");
+	String cutoff = reader.next();
+	
+    open_Drivers.add(Gambo_Login(usr,pwd));
+    Monitor_Crash(open_Drivers.get(0), bet, cutoff);
+>>>>>>> 782be29d78cdb3d428ded23a5509b547eacc3249
     
     reader.close();
   }
@@ -64,13 +73,17 @@ public class Gambo {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"steamAccountName\"]"))).sendKeys(usr);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"steamPassword\"]"))).sendKeys(pwd);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"imageLogin\"]"))).click();
-		WebDriverWait wait30 = new WebDriverWait(driver, 30); 
-		wait30.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"success_continue_btn\"]/div[1]"))).click();
+		WebDriverWait wait60 = new WebDriverWait(driver, 60); 
+		wait60.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"success_continue_btn\"]/div[1]"))).click();
 		driver.get("https://gamdom.com/crash");
 
   }
   
+<<<<<<< HEAD
   public static void Monitor_Crash(WebDriver driver, String bet, String multiplyer) { 
+=======
+  public static void Monitor_Crash(WebDriver driver, String bet, String cutoff) { 
+>>>>>>> 782be29d78cdb3d428ded23a5509b547eacc3249
 	  
 	  while(true) {
 		  String crash = driver.getPageSource().substring(0,150).split("<title>")[1].split("-")[0].trim();
@@ -84,6 +97,8 @@ public class Gambo {
 			  
 			  System.out.println(crash);
 			  
+			  String bet_made = Repeater_Auto_Bet(driver, bet, crash, cutoff);
+
 			  try {
 				TimeUnit.SECONDS.sleep(3);
 			} catch (InterruptedException e) {
@@ -93,7 +108,7 @@ public class Gambo {
 				File csv = new File("crashes.csv");
 				try {
 					PrintWriter out = new PrintWriter(new FileWriter(csv, true));				
-					out.println(timestamp + ',' + crash);
+					out.println(timestamp + ',' + crash + ',' + bet_made);
 					out.close();
 					
 				}
@@ -101,14 +116,23 @@ public class Gambo {
 					System.out.printf("Error: %s\n", ex);
 					
 				}
-				break;
 		  	}    
 	  	}
+<<<<<<< HEAD
 	  Repeater_Auto_Bet(driver, bet, crash, multiplyer);
   	}
   public static void Repeater_Auto_Bet(WebDriver driver, String bet, String recentCrash, String multiplyer) {
+=======
+  	}
+  public static String Repeater_Auto_Bet(WebDriver driver, String bet, String crash, String cutoff) {
+>>>>>>> 782be29d78cdb3d428ded23a5509b547eacc3249
 	  
+      float crash_num = Float.parseFloat(crash);
+      float cutoff_num = Float.parseFloat(cutoff);
+
+      if (crash_num <= cutoff_num) {
 	  
+<<<<<<< HEAD
 	  WebElement enterBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[1]/div/div/div/input"));
 	  WebElement buttonBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[5]/div/button/span"));
 	  
@@ -125,6 +149,31 @@ public class Gambo {
 	  Monitor_Crash(driver, bet, recentCrash); 
   	  }else {
   	  Monitor_Crash(driver, bet, recentCrash);
+=======
+    	  	WebElement enterBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[1]/div/div/div/input"));
+    	  	WebElement enterCutoff = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[2]/div/div/div/input"));
+    	  	WebElement clickBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[5]/div/button/span"));
+	  
+    	  	try {
+    	  		enterBet.clear();
+    	  		enterBet.sendKeys(bet);
+    	  		enterCutoff.clear();
+    	  		enterCutoff.sendKeys(cutoff);
+	  		clickBet.click();
+	  		return "Bet";
+
+    	  	}catch(Exception e) {
+    	  		System.out.println("Exception Caught: " + e);
+    	  		return "Error";
+	  }
+	  	
+	  
+	  //Monitor_Crash(driver, bet);
+	  
+      }
+      else; 
+      	return "No_Bet";
+>>>>>>> 782be29d78cdb3d428ded23a5509b547eacc3249
   }
 }
 
