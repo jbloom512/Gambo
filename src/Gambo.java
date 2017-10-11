@@ -86,7 +86,7 @@ public class Gambo {
 			  
 			  crash = crash.split("crashed at")[1].split("x")[0];
 			  
-			  System.out.println(crash);
+			  System.out.println("Crashed at" + crash + "x");
 			  
 			  String bet_made = Repeater_Auto_Bet(driver, bet, crash, cutoff);
 
@@ -119,7 +119,7 @@ public class Gambo {
 	  
     	  	WebElement enterBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[1]/div/div/div/input"));
     	  	WebElement enterCutoff = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[2]/div/div/div/input"));
-    	  	WebElement clickBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[5]/div/button/span"));
+    	  	WebElement clickBet = driver.findElement(By.xpath("//*[@id=\"controls-inner-container\"]/div[5]/div/button"));
 	  
     	  	try {
     	  		enterBet.clear();
@@ -127,6 +127,7 @@ public class Gambo {
     	  		enterCutoff.clear();
     	  		enterCutoff.sendKeys(cutoff);
 	  		clickBet.click();
+	  		System.out.println("Bet Placed");
 	  		return "Bet";
 
     	  	}catch(Exception e) {
